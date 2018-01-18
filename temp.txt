@@ -1,0 +1,7 @@
+== 1
+Jekyll theme
+Solar
+http://jekyllthemes.org/themes/solar/
+homepage 
+https://github.com/mattvh/solar-theme-jekyll
+== 2
