@@ -1,0 +1,27 @@
+Install
+$ sudo apt-get update
+$ sudo apt-get -y install git
+$ sudo apt-get -y install ruby
+$ sudo apt-get -y install jekyll
+
+Install Nodejs
+$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
+
+$ sudo npm install -g gitbook-cli
+$ sudo gitbook install
+$ sudo npm install -g gitbook-summary
+
+Download code
+$ cd Desktop
+$ git clone https://github.com/op47147/markdown.test.git
+$ cd markdown.test
+
+Open website on localhost:4000
+$ gitbook serve
+
+Update SUMMARY.md
+$ book sm -i '_book,node_modules' -o ./SUMMARY.md -d
+
+Generate folder tree
+$ gitbook init
