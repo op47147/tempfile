@@ -1,0 +1,3 @@
+ifname = wlan0
+input = efuse_get btrmap,15b,4
+wlan0    efuse_get: 0xFF  0xFF  0xFF  0xFF 
