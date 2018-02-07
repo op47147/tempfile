@@ -1,0 +1,20 @@
+Phone with perf and setting 
+"-s -i 1"
+Tinker with iperf and setting 
+"-c 192.168.43.1 -t 6000 -w 1m -i 1"
+
+[Screenshot from 2018-02-07 06-41-57 A2DP streaming.png]
+iperf & A2DP streaming at shielding room
+20.0 Mbps
+
+[Screenshot from 2018-02-07 06-45-45 wifi only.png]
+iperf at shielding room
+50.0 Mbps
+
+[Screenshot from 2018-02-07 07-02-24 pair to headset.png]
+search and pair to headset throughput down to 
+0~1000 Kbps
+
+[Screenshot from 2018-02-07 07-06-12 stop a2dp streaming.png]
+Stop a2dp streaming back to 
+50Mbps
