@@ -1,8 +1,6 @@
 Install
 $ sudo apt-get update
 $ sudo apt-get -y install git
-$ sudo apt-get -y install ruby
-$ sudo apt-get -y install jekyll
 
 Install Nodejs
 $ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
@@ -21,6 +19,7 @@ Open website on localhost:4000
 $ gitbook serve
 
 Update SUMMARY.md
+$ rm SUMMARY.md
 $ book sm -i '_book,node_modules' -o ./SUMMARY.md -d
 
 Generate folder tree
