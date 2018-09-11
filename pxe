@@ -1,0 +1,45 @@
+1 Install tftp
+Install following packages
+sudo apt install xinetd tftpd
+      2. Create /etc/xinet.d/tftp and put this entry
+service tftp
+{
+        protocol     = udp
+        port         = 69
+        socket_type  = dgram
+        wait         = yes
+        user         = nobody
+        server       = /usr/sbin/in.tftpd
+        server_args  = -s /tftpboot
+        disable      = no
+}
+      3. Create a folder /tftpboot
+sudo mkdir /tftpboot
+sudo chmod -R 777 /tftpboot
+sudo chown -R nobody /tftpboot
+      4. Restart the xinetd service.
+sudo service xinetd restart
+2 Install nfs
+Install following packages
+sudo apt install nfs-kernel-server nfs-common
+      2. Create a folder/var/nfsshare
+sudo mkdir /var/nfsshare
+sudo chmod -R 777 /var/nfsshare
+      3. Create /etc/exports and put this entry
+/var/nfsshare        10.42.0.0/24(rw,sync,no_subtree_check,no_root_squash)
+      4. Restart NFS server
+/etc/init.d/nfs-kernel-server restart
+3 PXE Boot from Da Vinci
+Set up a DHCP server as a PXE server. This server must provide functions of TFTP server and NFS server.
+Prepare PXE config file in tftpboot directory. Create a directory “pxelinux.cfg” in tftpboot directory. The file name of PXE config is “default”. The patch of PXE config should be :
+"/tftpboot/pxelinux.cfg/default" The content of PXE config is like "/boot/extlinux/extlinux.conf" in Tinker board, but the path of rootfs should be modified. The following is an example. “10.42.0.1” is IP of NFS server. “/nfs/rootfs/” is path of NFS ROOT.
+
+label kernel-4.4
+   kernel /zImage
+   fdt /rk3288-miniarm.dtb
+   append  earlyprintk console=tty1 console=ttyS1,115200n8 root=/dev/nfs nfsroot=10.42.0.1:/var/nfsshare rw ip=dhcp rootwait elevator=deadline
+Put the following files into tftpboot directory for PXE boot. hwintf.conf: You can get it from “/boot/hwintf.conf” in Tinker board. rk3288-miniarm.dtb: Device Tree config for Linux kernel. zImage: Linux kernel image with NFS functions(CONFIGIPPNP, CONFIGIPPNPDHCP, CONFIGIPPNPBOOTP, CONFIGIPPNPRARP, and CONFIGROOTNFS). The paths should be : "/tftpboot/hwintf.conf " "/tftpboot/rk3288-miniarm.dtb" "/tftpboot/zImage"
+Copy the whole rootfs of Tinker board into NFS directory in NFS server. According to the example above, the path of NFS ROOT in NFS server should be: “/nfs/rootfs” This path needs to be shared by NFS server. Modify the partition definitions in “/nfs/rootfs/etc/fstab”. There should be only one partition.
+
+proc            /proc           proc    defaults          0       0
+Remove the following files in Tinker board. “/boot/rk3288-miniarm.dtb” “/boot/zImage” The bootloader will start PXE boot if these files are removed from Tinker board.
